@@ -1,0 +1,75 @@
+{%extends 'superadmin/index.html'%}
+{%load static%}
+{%block body%}
+
+{%if msg%}
+<script>
+    alert("Reply Sent Successfully...");
+    window.location.href = "/client-ticket";
+</script>
+
+{%endif%}
+<section class="section" id="sectionGal">
+	<div data-animate="fadeInUp" class="fadeInUp animated">
+		
+		<div class="row ">
+		<div class="col-lg-10" style="margin:1% 7%;background-color:black;padding:20px;border-radius:10px">
+			<form method="post"enctype="multipart/form-data">
+			{%csrf_token%}
+			<h2 class="text-center text-warning">Reply Ticket</h2>
+			<div class="form-group"style="color:white">
+				
+				<h4 class="text-success">Subject : {{ticket.subject}}</h4><br>
+				<p>{{ticket.description|safe}}</p>
+
+				<br>
+				{%if ticket.image%}
+				<a href="{{ticket.image.url}}"><img src="{{ticket.image.url}}"style="height:200px"></a>
+				{%endif%}
+				<p>Call back Number: {{ticket.phone}}</p>
+			 </div>
+				<textarea name="reply" class="form-control" cols="30" rows="1" placeholder="Please Describe Your Query "></textarea>
+				<div class="mt-3">
+				<span style="color:white">Status:</span> <select name="status">
+					<option value="0">Active</option>
+					<option value="1">Closed</option>
+				</select>
+			</div>
+
+				<div class="form-group text-center">
+					<button  class="btn btn-primary  mt-2"  type="submit">Submit</button>
+				 </div>
+			</form>
+		</div>
+	 </div>
+	 <script>
+		tinymce.init({
+		  selector: 'textarea',
+		  plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+		  toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+		});
+	  </script>
+
+	  <h2 class="text-center text-light" style="margin:1% 7%;background-color:#da6220;padding:10px;border-radius:10px">Ticket History</h2>
+	  {%for item in ticket_history%}
+	  {%if item.status == 1%}
+	  <div class="col-lg-10" style="margin:1% 7%;background-color:black;padding:20px;border-radius:10px;color:black">
+		  <span style="color:white;"> {%if item.status == 0 %}<span style="background-color:rgb(8, 95, 8);padding:2px 5px;border-radius:10px;">Active</span> {%else%} <span style="background-color:rgb(201, 35, 35);padding:2px 5px;border-radius:10px;">Closed</span> {%endif%}</span>
+		  <p style="color:green;float:right"><span style="color:white;">Date:</span> {{item.date}}</p>
+       <div style="margin:1% 20% 1% 1%;background-color:#da6220;padding:20px;border-radius:1px 25px 1px 47px">
+		<h4 style="color:white">{{item.subject}}</h4>
+	   <p >{{item.description|safe}}</p>
+	   </div>
+{%if item.reply%}
+	   <div style="margin:1% 1% 1% 40%;background-color:white;padding:20px;border-radius:1px 25px 1px 47px">
+	   <p style="color:white !important">{{item.reply|safe}}</p>
+	   </div>
+	   <span class="text-light" style="float:right">Replied by {{item.employee_email}}</span>
+	   {%endif%}
+	</div>
+	{%endif%}
+	{%endfor%}
+	 
+</section>
+
+{%endblock%}

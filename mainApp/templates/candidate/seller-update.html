@@ -1,0 +1,250 @@
+{%extends 'superadmin/index.html'%}
+{%load static%}
+{%block body%}
+<!-- ============================================================== -->
+<div class="main-contentw-100">
+    <div class="">
+        <div class="container-fluid">
+            
+            <!-- end row -->
+            {%if msg%}
+            <script>
+                alert("profile Updated Successfully...")
+                window.location.href = "/admin-seller"; 
+                
+            </script>
+            {%endif%}
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <h4 style="color:green;text-align:center;border:1px solid rgb(195, 187, 187);padding: 5px;background-color: rgb(248, 240, 255);">Update Seller </h4>
+                            <form method="post" enctype="multipart/form-data" class="form-control">
+                                {%csrf_token%}
+                                <div class="row">
+
+                                    <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label"> Name<span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" placeholder="Enter Name"name="name" value="{{data.name}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label"> Company Name<span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" placeholder="Enter Company Name"name="company_name" value="{{data.company_name}}">
+                                        </div>
+                                    </div>
+                                   <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label"> Email<span class="text-danger">*</span></label>
+                                            <input type="email" class="form-control" placeholder="Enter Email"name="email" value="{{data.email}}">
+                                        </div>
+                                    </div>
+                                   <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label"> Phone<span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" placeholder="Enter Phone"name="name" value="{{data.phone}}" readonly>
+                                        </div>
+                                    </div>
+                                  
+                                   <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label"> PIN<span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" placeholder="Enter PIN"name="pin" value="{{data.pin}}">
+                                        </div>
+                                    </div>
+                                    {%if data.photo%}
+                                <div class="col-lg-1 mt-4 mt-4">
+                                    <div class="mb-3">
+                                        <div class="input-group">
+                                            <img src="{{data.photo.url}}"style="height:50px;width:50px"  class="form-control" value="{{data.gst_certificate}}">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                {%endif%}
+                                   <div class="col-lg-2">
+                                        <div class="mb-3">
+                                            <label class="form-label"> Photo(Size:100x100)<span class="text-danger">*</span></label>
+                                            <input type="file" accept=".png,.jpg"class="form-control" name="photo">
+                                        </div>
+                                    </div>
+                                   <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label"> Bank Name<span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" placeholder="Enter Bank Name"name="bank_name" value="{{data.bank_name}}">
+                                        </div>
+                                    </div>
+                                   <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label"> Account Holder Name<span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" placeholder="Enter Account Holder Name"name="account_holder_name" value="{{data.account_holder_name}}">
+                                        </div>
+                                    </div>
+                                   <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label"> Account Number<span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" placeholder="Enter Account Number"name="account_number" value="{{data.account_number}}">
+                                        </div>
+                                    </div>
+                                   <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label"> IFSC Code<span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" placeholder="Enter IFSC Code"name="ifsc_code" value="{{data.ifsc_code}}">
+                                        </div>
+                                    </div>
+                                   <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label"> Address<span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" placeholder="Enter Address"name="address" value="{{data.address}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label"> State<span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" placeholder="Enter State"name="state" value="{{data.state}}">
+                                        </div>
+                                    </div>
+                                    
+                                   
+                                    
+                                   <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label"> City<span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" placeholder="Enter City"name="city" value="{{data.city}}">
+                                        </div>
+                                    </div>
+                                   
+                                   <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label"> GST<span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" placeholder="Enter GST"name="gst" value="{{data.gst}}">
+                                        </div>
+                                    </div>
+                                    <!-- HTML template -->
+                                {%if data.gst_certificate%}
+                                <div class="col-lg-1 mt-4 mt-4">
+                                    <div class="mb-3">
+                                        <div class="input-group">
+                                            <img src="{{data.gst_certificate.url}}"style="height:50px;width:50px"  class="form-control" value="{{data.gst_certificate}}">
+                                            <span class="input-group-btn">
+                                                <a href="/admin-delete-image/{{data.id}}/gst_certificate" class="btn btn-danger btn-sm" style="position:absolute;height:20px;width:20px;padding:1px">X</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                {%endif%}
+                                <div class="col-lg-2">
+                                    <div class="mb-3">
+                                        <label class="form-label"> GST Certificate<span class="text-danger">*</span></label>
+                                        <input type="file" class="form-control" name="gst_certificate" value="{{data.gst_certificate}}">
+                                    </div>
+                                </div>
+                                
+                                
+                                    
+                                   
+                                {%if data.udhyam_certificate%}
+                                <div class="col-lg-1 mt-4">
+                                    <div class="mb-3">
+                                        <div class="input-group">
+                                            <img src="{{data.udhyam_certificate.url}}" style="height:50px;width:50px"  class="form-control" value="{{data.udhyam_certificate}}">
+                                            <span class="input-group-btn">
+                                                <a href="/admin-delete-image/{{data.id}}/udhyam_certificate" class="btn btn-danger btn-sm" style="position:absolute;height:20px;width:20px;padding:1px">X</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                {%endif%}
+                                    
+                                   <div class="col-lg-2">
+                                        <div class="mb-3">
+                                            <label class="form-label"> Udhyam Certificate<span class="text-danger">*</span></label>
+                                            <input type="file" class="form-control" name="udhyam_certificate" value="{{data.udhyam_certificate}}">
+                                        </div>
+                                    </div>
+                                   
+                                {%if data.pan_card%}
+                                <div class="col-lg-1 mt-4">
+                                    <div class="mb-3">
+                                        <div class="input-group">
+                                            <img src="{{data.pan_card.url}}" style="height:50px;width:50px"  class="form-control" value="{{data.pan_card}}">
+                                            <span class="input-group-btn">
+                                                <a href="/admin-delete-image/{{data.id}}/pan_card" class="btn btn-danger btn-sm" style="position:absolute;height:20px;width:20px;padding:1px">X</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                {%endif%}
+                                   <div class="col-lg-2">
+                                        <div class="mb-3">
+                                            <label class="form-label"> Pan card<span class="text-danger">*</span></label>
+                                            <input type="file" class="form-control" name="pan_card" value="{{data.pan_card}}">
+                                        </div>
+                                    </div>
+                                    
+                                    {%if data.cancelled_check%}
+                                <div class="col-lg-1 mt-4">
+                                    <div class="mb-3">
+                                        <div class="input-group">
+                                            <img src="{{data.cancelled_check.url}}" style="height:50px;width:50px"  class="form-control" value="{{data.cancelled_check}}">
+                                            <span class="input-group-btn">
+                                                <a href="/admin-delete-image/{{data.id}}/cancelled_check" class="btn btn-danger btn-sm" style="position:absolute;height:20px;width:20px;padding:1px">X</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                {%endif%}
+                                   <div class="col-lg-2">
+                                        <div class="mb-3">
+                                            <label class="form-label"> Cancelled Check<span class="text-danger">*</span></label>
+                                            <input type="file" class="form-control" name="cancelled_check" value="{{data.cancelled_check}}">
+                                        </div>
+                                    </div>
+                                    
+                                {%if data.other_document%}
+                                <div class="col-lg-1 mt-4">
+                                    <div class="mb-3">
+                                        <div class="input-group">
+                                            <img src="{{data.other_document.url}}" style="height:50px;width:50px"  class="form-control" value="{{data.other_document}}">
+                                            <span class="input-group-btn">
+                                                <a href="/admin-delete-image/{{data.id}}/other_document" class="btn btn-danger btn-sm" style="position:absolute;height:20px;width:20px;padding:1px">X</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                {%endif%}
+                                   <div class="col-lg-2">
+                                        <div class="mb-3">
+                                            <label class="form-label"> Other Document</label>
+                                            <input type="file" class="form-control" name="other_document" value="{{data.other_document}}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label"> Verification<span class="text-danger">*</span></label>
+                                            <select name="verification" class="form-control">
+                                                <option value="Pending"{%if data.verification == 'Pending'%}selected {%endif%}>Pending</option>
+                                                <option value="Done"{%if data.verification == 'Done'%}selected {%endif%}>Done</option>
+                                            </select>
+                                            
+                                        </div>
+                                    </div>
+                                    
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary text-center mt-4" style="padding:2px 50px;">Update</submit>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end row -->
+        </div> 
+    </div>
+    <!-- End Page-content -->
+
+    {%endblock%}

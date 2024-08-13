@@ -1,0 +1,190 @@
+{%extends 'superadmin/index.html'%}
+{%load static%}
+{%block body%}
+<!-- ============================================================== -->
+<div class="main-contentw-100">
+    <div class="">
+        <!-- <div class="container-fluid">
+            <form method="post">
+                {% csrf_token %}
+            <div class="row">
+                <div class="col-lg-3">
+                    <lable>Select Seller</lable>
+                    <select name="seller" class="form-control">
+                        <option value="all">All Seller<option>
+                        {%for item in seller%}
+                        <option value="{{item.phone}}">{{item.name}}</option>
+                        {%endfor%}
+                        
+                    </select>
+                </div>
+                <div class="col-lg-3">
+                    <lable>From</lable>
+                    <input type="date" name="from_date" class="form-control">
+                </div>
+                
+                <div class="col-lg-3">
+                    <lable>To</lable>
+                    <input type="date" name="to_date" class="form-control">
+                </div> 
+                <div class="col-lg-3">
+                    <input type="submit" value="Search"class="btn btn-primary mt-3">
+                </div>
+            </form>
+        </div> -->
+        <div class="row">
+                <div class="col-lg-12 mt-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title mb-4 text-center">Total Order</h4>
+                            <div class="table-responsive">
+                                <table class="table align-middle table-nowrap mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <!-- <th class="align-middle"> <input type="checkbox" id="opr" name="opr" onchange="toggleButtons()"></th> -->
+                                            <th class="align-middle">Order Id</th>
+                                            <th class="align-middle">Buyer</th>
+                                            <th class="align-middle">Total</th>
+                                            <th class="align-middle">Shipping</th>
+                                            <th class="align-middle">Final</th>
+                                            <th class="align-middle">Details</th>
+                                            <th class="align-middle">Invoice</th>
+                                            {% comment %} <th class="align-middle">Edit</th>
+                                            <th class="align-middle">Delete</th>
+                                             {% endcomment %}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                        {%for item in page_posts%}
+                                        <!-- <tr>
+                                            
+                                            <div id="buttons">
+                                                
+                                                <button onclick="acceptAll()" class="btn btn-primary btn-sm">Downlaod All</button>
+                                                
+                                            </div>
+                                            <script>
+                                                function toggleButtons() {
+                                                    var checkBox = document.getElementById("opr");
+                                                    
+                                                    var buttons = document.getElementById("buttons");
+                                                    if (checkBox.checked == true) {
+                                                        buttons.style.display = "block";
+                                                        document.getElementById("pch").checked;
+                                                    } else {
+                                                        buttons.style.display = "none";
+                                                    }
+                                                }
+                                        
+                                                function acceptAll() {
+                                                    // Logic to accept all
+                                                    window.location.href = "/seller-download-all-invoice";
+                                                }
+                                        
+                                                
+                                            </script>
+                                        </tr> -->
+                                        <tr>
+                                            <!-- <style>
+                                                #buttons {
+                                                    display: none;
+                                                }
+                                            </style>
+                                            <td>
+                                                <input type="checkbox"id="pch">
+                                            </td> -->
+                                            <td><a href="/admin-order-details/{{item.id}}">{{item.id}}</a></td>
+                                            <td>
+                                                {{item.user.name}}</td>
+                                            <td>
+                                                
+                                                ₹{{item.total}}
+                                            
+                                            </td>
+                                            <td>
+                                                ₹{{item.shipping}}</td>
+                                                
+                                            
+                                            <td>
+                                                ₹{{item.final}}
+                                            </td>
+
+                                            <td>
+                                                <a href="/admin-order-details/{{item.id}}"><i class="fa fa-eye"></i></a>
+                                            </td>
+                                            <td>
+                                                <a class=" btn btn-success btn-sm" href="/admin-download-invoice/{{item.id}}">Download</a>
+                                            
+                                            </td>
+                                            
+                                                                                       
+                                            {% comment %} <td>
+                                                <a href="/admin-update-product/{{item.id}}"><i class="fa fa-edit"></i></a>
+                                            </td>
+                                            <td>
+                                                <a href="#" onclick="confirmDelete('{{item.id}}')"><i class="fa fa-trash text-danger"></i></a>
+                                            </td>
+                                            <script>
+                                                function confirmDelete(id){
+                                                    if(confirm("Are You Sure?")){
+                                                     window.location.href="/admin-delete-product/"+id;
+                                                    }
+                                                    else {
+                                                        return false;
+                                                    }
+                                                }
+                                            </script> {% endcomment %}
+                                            
+                                        </tr>
+                                        {%endfor%}
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- end table-responsive -->
+                        </div>
+                    </div>
+                </div>
+                <div class="blog-pagination">
+                    <nav>
+                        <ul class="pagination">
+                            <li class="page-item previtem {% if not page_posts.has_previous %}disabled{% endif %}">
+                                <a class="page-link"
+                                    href="{% if page_posts.has_previous %}?page={{ page_posts.previous_page_number }}{% endif %}">
+                                    <i class="fas fa-regular fa-arrow-left"></i> Prev
+                                </a>
+                            </li>
+                            <li class="justify-content-center pagination-center">
+                                <div class="pagelink">
+                                    <ul class="d-flex">
+                                        {% for page_num in page_range %}
+                                        <li
+                                            class="page-item {% if page_posts.number == page_num %}active{% endif %}">
+                                            <a class="page-link" href="?page={{ page_num }}">
+                                                {{ page_num }}
+                                                {% if page_posts.number == page_num %}
+                                                <span class="visually-hidden">(current)</span>
+                                                {% endif %}
+                                            </a>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="page-item nextlink {% if not page_posts.has_next %}disabled{% endif %}">
+                                <a class="page-link"
+                                    href="{% if page_posts.has_next %}?page={{ page_posts.next_page_number }}{% endif %}">
+                                    Next <i class="fas fa-regular fa-arrow-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+
+            </div>        </div> 
+    </div>
+    <!-- End Page-content -->
+
+    {%endblock%}

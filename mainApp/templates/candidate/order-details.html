@@ -1,0 +1,147 @@
+{%extends 'superadmin/index.html'%}
+{%load static%}
+{% load mytags %}
+{%block body%}
+<!-- ============================================================== -->
+<div class="main-contentw-">
+    <div class="">
+        <div class="">
+            <div class="row">
+                <div class="col-lg-12 ">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 style="color:green;text-align:center;border:1px solid rgb(195, 187, 187);padding: 5px;background-color: rgb(248, 240, 255);">Order Details </h4>
+                            <div class="table-responsive">
+                                <table class="table align-middle table-nowrap table-bordered">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th class="align-middle">Order Id</th>
+                                            <td> {{data.id}}<td>
+                                        </tr>
+                                        <tr>
+                                            <th class="align-middle">Total</th>
+                                            <td> &#8377;{{data.total}}<td>
+                                        </tr>
+                                        <tr>
+                                            <th class="align-middle">Shipping</th>
+                                            <td> &#8377;{{data.shipping}}<td>
+                                        </tr>
+                                        <tr>
+                                            <th class="align-middle">Final</th>
+                                            <td> &#8377;{{data.final}}<td>
+                                        </tr>
+                                        {%if rppid%}
+                                        <tr>
+                                            <th class="align-middle">Rppid</th>
+                                            <td> {{data.rppid}}<td>
+                                        </tr>
+                                        {%endif%}
+                                        <tr>
+                                            <th class="align-middle">Payment Mode</th>
+                                            <td> {{data.paymentmode|paymentMode}}<td>
+                                        </tr>
+                                        <tr>
+                                            <th class="align-middle">Payment Status</th>
+                                            <td> {{data.paymentstatus|paymentStatus}}<td>
+                                        </tr>
+                                        <tr>
+                                            <th class="align-middle">Order Status</th>
+                                            <td>{{data.orderstatus|orderStatus}}<a href="/update-order-status/{{data.id}}">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-edit"></i></a><td>
+                                        </tr>
+
+                                        
+                                        {%for i in cpdata%}
+                                        <tr>
+                                            <th class="align-middle bg-danger">Product {{ forloop.counter }}</th>   
+                                        </tr>
+                                        <tr>
+                                            <th class="align-middle">Product Name</th>
+                                            <td> {{i.product_name|truncatewords:15}}<td>
+                                        </tr>
+                                        <tr>
+                                            <th class="align-middle">Price</th>
+                                            <td> &#8377;{{i.product_finalprice}}<td>
+                                        </tr>
+                                        <tr>
+                                            <th class="align-middle">Quantity</th>
+                                            <td> {{i.qty}}<td>
+                                        </tr>
+                                        <tr>
+                                            <th class="align-middle">Total</th>
+                                            <td> &#8377;{{i.total}}<td>
+                                        </tr>
+                                        
+                                        {%endfor%}
+
+                                        <tr>
+                                            <th class="align-middle bg-danger">Buyer Details</th>
+                                            
+                                        </tr>
+                                        
+                                        <tr>
+                                            <th class="align-middle">Buyer Name</th>
+                                            <td> {{data.buyer_name}}<td>
+                                        </tr>
+                                        <tr>
+                                            <th class="align-middle">Email</th>
+                                            <td> {{data.buyer_email}}<td>
+                                        </tr>
+                                        <tr>
+                                            <th class="align-middle">Phone</th>
+                                            <td> {{data.buyer_phone}}<td>
+                                        </tr>
+                                        <!-- <tr>
+                                            <th class="align-middle">Alternate Phone</th>
+                                            <td> {{data.buyer_alt_phone}}<td>
+                                        </tr> -->
+                                        <tr>
+                                            <th class="align-middle">Address</th>
+                                            <td> {{data.buyer_address}}<td>
+                                        </tr>
+                                        <!-- <tr>
+                                            <th class="align-middle">House No.</th>
+                                            <td> {{data.buyer_house_no}}<td>
+                                        </tr>
+                                        <tr>
+                                            <th class="align-middle">Road Name</th>
+                                            <td> {{data.buyer_road_name}}<td>
+                                        </tr>
+                                        <tr>
+                                            <th class="align-middle">Landmark </th>
+                                            <td> {{data.buyer_landmark}}<td>
+                                        </tr> -->
+                                        <tr>
+                                            <th class="align-middle">City</th>
+                                            <td> {{data.buyer_city}}<td>
+                                        </tr>
+                                        <tr>
+                                            <th class="align-middle">State</th>
+                                            <td> {{data.buyer_state}}<td>
+                                        </tr>
+                                        <tr>
+                                            <th class="align-middle">PIN</th>
+                                            <td> {{data.buyer_pin}}<td>
+                                        </tr>
+                                        <!-- <tr>
+                                            <th class="align-middle">Country</th>
+                                            <td> {{data.buyer_country}}<td>
+                                        </tr> -->
+
+                                        
+                                          
+                                    </thead>
+                                   
+                                </table>
+                            </div>
+                            <!-- end table-responsive -->
+                        </div>
+                    </div>
+                </div>
+                
+
+            </div>
+         </div> 
+    </div>
+    <!-- End Page-content -->
+
+    {%endblock%}

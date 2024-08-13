@@ -1,0 +1,72 @@
+{%extends 'superadmin/index.html'%}
+{% load static %}
+{%block body%}
+
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title mb-4 text-center">Total Price Range<span><a href="/add-price-range"> &nbsp;<i class="fa fa-plus" aria-hidden="true"></i></a>
+                            </span></h4>
+                            <div class="table-responsive">
+                                <table class="table align-middle table-nowrap mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            
+                                            
+                                            <th class="align-middle">Range</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {%for item in price_range%}
+                                        <tr>    
+                                            <td>
+                                                {{item.range}}
+                                            </td>
+                                           
+                                            
+                                            <td>
+                                                <a href="/update-price-range/{{item.id}}"><i class="fa fa-edit"></i></a>
+                                            </td>
+                                            <td>
+                                                <a href="#" onclick="confirmDelete('{{item.id}}')">
+                                                    <i class="fa fa-trash text-danger"></i>
+                                                </a>
+                                            </td>
+                                            
+                                            <script>
+                                                function confirmDelete(itemId) {
+                                                    if (confirm("Are you sure you want to delete this item?")) {
+                                                        window.location.href = "/delete-price-range/" + itemId;
+                                                    } else {
+                                                        return false;
+                                                    }
+                                                }
+                                            </script>
+                                            
+                                            
+                                        </tr>
+                                        {%endfor%}
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- end table-responsive -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- container-fluid -->
+    </div>
+
+    <!-- End Page-content -->
+
+  
+
+    {%endblock%}

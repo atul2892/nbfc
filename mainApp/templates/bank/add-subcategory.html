@@ -1,0 +1,73 @@
+{%extends 'superadmin/index.html'%}
+{%load static%}
+{%block body%}
+<!-- ============================================================== -->
+<div class="main-contentw-100">
+    <div class="">
+        <div class="container-fluid">
+            
+            <!-- end row -->
+            
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <h4 class=" text-center">Add Subategory</h4>
+                            <form method="post" enctype="multipart/form-data">
+                                {%csrf_token%}
+                                <div class="row">
+                                    
+
+                            <div class="col-lg-3">
+                                <div class="mb-3">
+                                    <label class="form-label">Category Name<span class="text-danger">*</span></label>
+                                  <select name="category" class="form-control" required>
+                                    <option value="">Select Category</option>
+                                    {%for item in cat%}
+                                    <option value="{{item.name}}">{{item.name}}</option>
+                                    {%endfor%}
+                                  </select>
+                                </div>
+                            </div>
+                                        
+                            <div class="col-lg-3">
+                                <div class="mb-3">
+                                    <label class="form-label">Subcategory Name<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" placeholder="Enter Name"name="name" required>
+                                </div>
+                            </div>
+                                
+                            
+                            
+                            <div class="col-lg-3">
+                                <div class="mb-3">
+                                    <label class="form-label">Icon
+                                        <!-- <span class="text-danger">*</span> -->
+                                    </label>
+                                    <input type="file" accept=".png,.jpg,.jpeg" class="form-control" name="image" >
+                                </div>
+                            </div>
+                            
+                           
+                            <script>
+                                tinymce.init({
+                                  selector: 'textarea',
+                                  plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+                                  toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+                                });
+                              </script>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary text-center mt-4" style="padding:2px 50px;">Add</submit>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end row -->
+        </div> 
+    </div>
+    <!-- End Page-content -->
+
+    {%endblock%}

@@ -1,0 +1,190 @@
+{%extends "index.html"%}
+{%load static%}
+{%block body%}
+
+    <main id="main" class="aux-main aux-territory  aux-single aux-page aux-boxed-container no-sidebar aux-sidebar-style-border aux-user-entry" style="margin-top:15%;" >
+        <div class="aux-wrapper">
+            <div class="aux-container aux-fold">
+
+                <div id="primary" class="aux-primary" >
+                    <div class="content" role="main"  >
+
+                        
+                
+                        
+                        <article id="post-262" class="post-262 page type-page status-publish hentry">
+
+                            <div class="entry-main">
+
+                                <div class="entry-content">
+
+                                    
+<div class="um um-login um-258">
+	<div class="um-form">
+		{%for i in messages%}
+		<script>
+			alert("{{i}}")
+		</script>
+		{%endfor%}
+		<form method="post" action="">
+			{%csrf_token%}
+			<div class="form-group">
+				<label for="username">Username or User Id</label>
+				<input type="text" name="user_id" id="username" autocomplete="off" required>
+			</div>
+	
+			<div class="form-group">
+				<label for="password">Password</label>
+				<input type="password" name="password" id="password" autocomplete="off" required>
+			</div>
+	
+			<input type="hidden" name="form_id" value="258">
+			<input type="hidden" name="_wp_http_referer" value="/login/">
+	
+			<div class="form-group checkbox-group">
+				<label>
+					<input type="checkbox" name="rememberme" value="1">
+					Keep me signed in
+				</label>
+			</div>
+	
+			<div class="form-actions">
+				<input type="submit" value="Login">
+				<a href="/register" class="button-alt">Register</a>
+			</div>
+	
+			<div class="form-footer">
+				<a href="/password-reset/index.html" class="link-alt">Forgot your password?</a>
+			</div>
+		</form>
+
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				margin: 20px;
+			}
+			
+			form {
+				max-width: 600px;
+				margin: auto;
+				padding: 20px;
+				border: 1px solid #ddd;
+				border-radius: 8px;
+				background-color: #f9f9f9;
+			}
+			
+			.form-group {
+				margin-bottom: 15px;
+			}
+			
+			.form-group label {
+				display: block;
+				margin-bottom: 5px;
+				font-weight: bold;
+			}
+			
+			.form-group input[type="text"],
+			.form-group input[type="password"] {
+				width: 100%;
+				padding: 8px;
+				border: 1px solid #ccc;
+				border-radius: 4px;
+			}
+			
+			.checkbox-group {
+				display: flex;
+				align-items: center;
+			}
+			
+			.checkbox-group label {
+				margin: 0;
+			}
+			
+			.form-actions {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-top: 20px;
+			}
+			
+			.form-actions input[type="submit"] {
+				padding: 10px 20px;
+				border: none;
+				border-radius: 4px;
+				background-color: #007bff;
+				color: white;
+				cursor: pointer;
+			}
+			
+			.form-actions input[type="submit"]:hover {
+				background-color: #0056b3;
+			}
+			
+			.form-actions .button-alt {
+				text-decoration: none;
+				color: #007bff;
+			}
+			
+			.form-actions .button-alt:hover {
+				text-decoration: underline;
+			}
+			
+			.form-footer {
+				margin-top: 20px;
+				text-align: center;
+			}
+			
+			.form-footer .link-alt {
+				text-decoration: none;
+				color: #007bff;
+			}
+			
+			.form-footer .link-alt:hover {
+				text-decoration: underline;
+			}
+			
+		</style>
+	</div>
+</div>
+<style>
+			.um-258.um {
+			max-width: 450px;
+		}
+		</style>
+
+<div class="clear"></div>
+                                </div> <!-- end article section -->
+
+                                <footer class="entry-meta">
+                                                                    </footer> <!-- end article footer -->
+
+                            </div>
+
+                        </article> <!-- end article -->
+
+
+                        
+                        <div class="clear"></div>
+
+                        
+                        <div class="clear"></div>
+
+                        
+
+<!-- You can start editing here. -->
+
+
+    
+
+
+
+                
+                    </div><!-- end content -->
+                </div><!-- end primary -->
+
+                
+            </div><!-- end container -->
+        </div><!-- end wrapper -->
+    </main><!-- end main -->
+
+    {%endblock%}

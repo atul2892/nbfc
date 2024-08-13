@@ -1,0 +1,487 @@
+{%extends 'superadmin/index.html'%}
+{%load static%}
+{%block body%}
+<!-- ============================================================== -->
+<div class="main-contentw-100">
+    <div class="">
+        <div class="container-fluid">
+            
+            <!-- end row -->
+            {%if msg%}
+            <script>
+                alert("Product Added Successfully...")
+                window.location.href = "/admin-dashboard"; 
+            </script>
+            {%endif%}
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <h4 style="color:green;text-align:center;border:1px solid rgb(195, 187, 187);padding: 5px;background-color: rgb(248, 240, 255);">Add Your Digital Product </h4>
+                            <form method="post" enctype="multipart/form-data">
+                                {%csrf_token%}
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label">Maincategory<span class="text-danger">*</span></label>
+                                            <select id="maincategory-select" class="form-control" name="maincategory" >
+                                                <option value="" disabled selected>Select Maincategory &#9660;</option>
+                                                {% for item in maincategories %}
+                                                <option value="{{ item.name }}">{{ item.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label">Category<span class="text-danger">*</span></label>
+                                            <select id="subcategory-select" class="form-control" name="subcategory">
+                                                <option value="" disabled selected>Select Category &#9660;</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <script>
+                                        document.getElementById('maincategory-select').addEventListener('change', function() {
+                                            var maincategory = this.value;
+                                            var subcategorySelect = document.getElementById('subcategory-select');
+                                            subcategorySelect.innerHTML = '<option value="#" disabled selected>Select Category &#9660;</option>';
+                                            {% for item in categories %}
+                                                if ('{{ item.maincategory }}' === maincategory) {
+                                                    var option = document.createElement('option');
+                                                    option.value = '{{ item.category_name }}';
+                                                    option.text = '{{ item.category_name }}';
+                                                    subcategorySelect.appendChild(option);
+                                                }
+                                            {% endfor %}
+                                        });
+                                    </script>
+                                    
+                                    
+                                    <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label">Brand<span class="text-danger">*</span></label>
+                                            <select type="text" class="form-control"  name="brand" >
+                                                <option value="" disabled selected>Select Brand &#9660;</option>
+                                                {%for item in brands%}
+                                                <option value="{{item.name}}">{{item.name}}</option>
+                                                {%endfor%}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label">Seller<span class="text-danger">*</span></label>
+                                            <select type="text" class="form-control"  name="sell" >
+                                                <option value="" disabled selected>Select Seller &#9660;</option>
+                                                {%for item in seller%}
+                                                <option value="{{item.phone}}">{{item.company_name}}</option>
+                                                {%endfor%}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                   
+
+                                    <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label"> Name<span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" placeholder="Enter Name"name="name" >
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label"> Unit<span class="text-danger">*</span></label>
+                                            <input type="number" class="form-control" placeholder="Unit (e.g. KG, pc, etc)" name="unit" step="any" pattern="[0-9]*" oninput="this.value = this.value.replace(/[^0-9]/g, '')" >
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label"> Weight(in Kg)<span class="text-danger">*</span></label>
+                                            <input type="number" class="form-control" placeholder="0.0"name="weight"  step="any" >
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label"> Minimum Purchase Qty<span class="text-danger">*</span></label>
+                                            <input type="number" class="form-control" placeholder="Enter Minimum Purchase Qty"name="minimum_purchase_qty"pattern="[0-9]*" oninput="this.value = this.value.replace(/[^0-9]/g, '')"  step="any">
+                                        </div>
+                                    </div>
+                                
+                                    <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label"> Tags<span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" placeholder="Enter Tags"name="tags" >
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label"> Product Image-1<span class="text-danger">*</span></label>
+                                            <input type="file" class="form-control" name="product_image1" accept="image/jpeg, image/png" >
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label"> Product Image-2</label>
+                                            <input type="file" class="form-control" accept="image/jpeg, image/png" name="product_image2" >
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label"> Product Image-3</label>
+                                            <input type="file" class="form-control" accept="image/jpeg, image/png" name="product_image3" >
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                <!--Seating Space-->
+                                <hr>
+                                <h6 style="color:black;text-align:center;border:1px solid rgb(224, 219, 219);padding: 3px;background-color: rgb(248, 240, 255);">Wholesale Price</h6>
+                                <div class="col-lg-4">
+                                    <div class="mb-3">
+                                        <input type="number" class="form-control" placeholder="Minimum"name="wholesale_min_qty1" >
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="mb-3">
+                                        
+                                        <input type="number" class="form-control" placeholder="Maximum"name="wholesale_max_qty1" >
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="mb-3">
+                                        
+                                        <input type="number" class="form-control" placeholder="Price"name="wholesale_price1" step="any">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="mb-3">
+                                        <input type="number" class="form-control" placeholder="Minimum"name="wholesale_min_qty2" >
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="mb-3">
+                                        
+                                        <input type="number" class="form-control" placeholder="Maximum"name="wholesale_max_qty2" >
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="mb-3">
+                                        
+                                        <input type="number" class="form-control" placeholder="Price"name="wholesale_price2"  step="any">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="mb-3">
+                                        <input type="number" class="form-control" placeholder="Minimum"name="wholesale_min_qty3" >
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="mb-3">
+                                        
+                                        <input type="number" class="form-control" placeholder="Maximum"name="wholesale_max_qty3" >
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="mb-3">
+                                        
+                                        <input type="number" class="form-control" placeholder="Price"name="wholesale_price3" step="any">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="mb-3">
+                                        <input type="number" class="form-control" placeholder="Above+"name="wholesale_min_qty4" >
+                                    </div>
+                                </div>
+                               
+                                <div class="col-lg-4">
+                                    <div class="mb-3">
+                                        
+                                        <input type="number" class="form-control" placeholder="Price"name="wholesale_price4"  step="any">
+                                    </div>
+                                </div>
+                                <h6 style="color:black;text-align:center;border:1px solid rgb(224, 219, 219);padding: 3px;background-color: rgb(248, 240, 255);">Product Videos</h6>
+                                
+                                <div class="col-lg-4">
+                                    <div class="mb-3">
+                                        <label class="form-label"> Video Provider</label>
+                                        <select name="link_type"class="form-control">
+                                            <option value="Youtube">YouTube</option>
+                                            <option value="others">Others</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8">
+                                    <div class="mb-3">
+                                        <label class="form-label"> Video Link</label>
+                                        <input type="text" class="form-control" placeholder="Video Link"name="video_link" >
+                                    </div>
+                                </div>
+                                
+                                
+                                <h6 style="color:black;text-align:center;border:1px solid rgb(224, 219, 219);padding: 3px;background-color: rgb(248, 240, 255);">Product Price & Stock</h6>
+                                <div class="col-lg-2">
+                                    <div class="mb-3">
+                                        <label class="form-label"> Unit Price<span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" placeholder="Unit Price"name="unit_price" >
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-2">
+                                    <div class="mb-3">
+                                        <label class="form-label"> Discount<span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" placeholder="Enter Discount"name="discount"  >
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="mb-3">
+                                        <label class="form-label"> Quantity<span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" placeholder="Enter Quantity"name="quantity"  pattern="[0-9]*" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="mb-3">
+                                        <label class="form-label"> SKU<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" placeholder="Enter  SKU"name="sku" >
+                                    </div>
+                                </div>
+                            
+                                <div class="col-lg-2">
+                                    <div class="mb-3">
+                                        <label class="form-label"> External Link</label>
+                                        <input type="text" class="form-control" placeholder="External link"name="external_link">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="mb-3">
+                                        <label class="form-label"> External Button Text</label>
+                                        <input type="text" class="form-control" placeholder="External Link Button Link"name="external_link_button_text">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Key Features <span class="text-danger">*</span></label>
+                                        <textarea name="key_features" class="form-control" cols="30" rows="1" placeholder="Key Features" ></textarea>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Subcategory Specification <span class="text-danger">*</span> </label>
+                                        {% comment %} <input type="text" id='scategory' name="subcategory_specification" class="form-control" placeholder="Subcategory Specification" > {% endcomment %}
+                                        <textarea id='scategory' name="subcategory_specification" class="form-control" cols="30" rows="1"  placeholder="Subcategory Specification"  ></textarea>
+                                    </div>
+                                </div>
+
+                                <script>
+                                    document.getElementById('subcategory-select').addEventListener('change', function() {
+                                       // Get the <select> element by its ID
+                                    var selectElement = document.getElementById('subcategory-select');
+                                    var selectElementmain = document.getElementById('maincategory-select');
+                                   
+                                    // Get the selected option
+                                    var selectedOption = selectElement.options[selectElement.selectedIndex];
+                                    var selectedOptionmain = selectElementmain.options[selectElementmain.selectedIndex];
+                                    
+                                    // Get the value of the selected option
+                                    var selectedValue = selectedOption.value;
+                                    var selectedValuemain = selectedOptionmain.value;
+                                    
+                                    // Get the text of the selected option (if needed)
+                                    var selectedText = selectedOption.text;
+                                    var selectedTextmain = selectedOptionmain.text;
+                                    {%for item in categories%}
+                                    if ('{{ item.category_name }}' === selectedValue && '{{ item.maincategory }}' === selectedValuemain) {
+                                        option = '{{ item.category_specification|escapejs }}';
+                                        tinymce.get("scategory").setContent(option);
+                                    }
+                                    
+                                    
+                                    {%endfor%}
+                                    
+                                    
+                                    // Now you have the selected value and text
+                                   // console.log("Selected value:", selectedValue);
+                                   // console.log("Selected text:", selectedText);
+                                   // console.log("Subcategory Specification:", option);
+                                   // console.log("Maincategory:", selectedTextmain);
+
+                                           
+                                    });
+                                </script>
+                                
+                                
+                                <div class="col-lg-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Product Description <span class="text-danger">*</span></label>
+                                        <textarea name="product_description" class="form-control" cols="30" rows="1" placeholder="Product Description" ></textarea>
+                                    </div>
+                                </div>
+                               
+                                <script>
+                                    tinymce.init({
+                                      selector: 'textarea',
+                                      plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+                                      toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+                                    });
+                                  </script>
+                                  
+                                  <div id="faqFieldsContainer">
+                                    <div id="faqFieldTemplate">
+                                        <div class="row mt-3">
+                                            <div class="col-lg-4">
+                                                <div class="mb-3">
+                                                    <label class="form-label">FAQ Question</label>
+                                                    <input type="text" class="form-control" placeholder="FAQ Question" name="product_faq_title[]">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="mb-3">
+                                                    <label class="form-label">FAQ Answer</label>
+                                                    <input type="text" class="form-control" placeholder="FAQ Answer" name="product_faq_answer[]">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="mt-4">
+                                        <button type="button" class="btn btn-secondary" onclick="addMoreFaqField()">Add More</button>
+                                    </div>
+                                </div>
+                                <script>
+                                    function addMoreFaqField() {
+                                        var faqFieldsContainer = document.getElementById('faqFieldsContainer');
+                                    
+                                        // Clone the FAQ fields template
+                                        var faqFieldTemplate = document.getElementById('faqFieldTemplate');
+                                        var newFaqField = faqFieldTemplate.cloneNode(true);
+                                        newFaqField.style.display = 'block';
+                                    
+                                        // Append the cloned FAQ fields to the container
+                                        faqFieldsContainer.appendChild(newFaqField);
+                                    }
+                                    </script>
+                                    
+                                
+<hr>
+
+                                <div class="col-lg-3">
+                                    <div class="mb-3">
+                                        <label class="form-label"> PDF Specification</label>
+                                        <input type="file" class="form-control" name="pdf_specification">
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="mb-3">
+                                        <label class="form-label"> SEO Meta Title</label>
+                                        <input type="text" class="form-control" placeholder="Meta Title"name="seo_meta_title" >
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="mb-3">
+                                        <label class="form-label"> SEO Meta Description</label>
+                                        <input type="text" class="form-control" placeholder="Meta Description"name="meta_description" >
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="mb-3">
+                                        <label class="form-label"> SEO Meta Image</label>
+                                        <input type="file" class="form-control"accept="image/jpeg, image/png" name="meta_image" >
+                                    </div>
+                                </div>
+                            
+                               
+                                <h6 style="color:black;text-align:center;border:1px solid rgb(224, 219, 219);padding: 3px;background-color: rgb(248, 240, 255);">Shipping Configurations</h6>
+                                
+                                <div class="col-lg-2">
+                                    <div class="mb-3">
+                                        <label class="form-label"> Free Shipping</label>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" value="yes"name="free_shipping">
+                                          </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="mb-3">
+                                        <label class="form-label"> Flat Rate</label>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" value="yes"name="fat_rate">
+                                          </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="mb-3">
+                                        <label class="form-label"> Is Product multiply by</label>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" value="yes"name="is_product_quality_multiply">
+                                          </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="mb-3">
+                                        <label class="form-label"> Low Stock Quantity Warning<span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" placeholder="Low Stock Quantity Warning"name="low_stock_qty" min="5"   pattern="[0-9]*" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                    </div>
+                                </div>
+                                
+                                <h6 style="color:black;text-align:center;border:1px solid rgb(224, 219, 219);padding: 3px;background-color: rgb(248, 240, 255);">Stock Visibility State</h6>
+                                <div class="col-lg-2">
+                                    <div class="mb-3">
+                                        <label class="form-label"> Show Stock Quantity</label>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" value="yes"name="hide_stock">
+                                          </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="mb-3">
+                                        <label class="form-label"> Show Stock with Text</label>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" value="yes"name="hide_stock">
+                                          </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="mb-3">
+                                        <label class="form-label"> Cash on Delivery</label>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" value="yes"name="cash_on_delivery">
+                                          </div>
+                                    </div>
+                                </div>
+                                
+                            
+                                <div class="col-lg-2">
+                                    <div class="mb-3">
+                                        <label class="form-label"> Shipping Days<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" placeholder=" Shipping Day"name="shipping_day" >
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="mb-3">
+                                        <label class="form-label"> Tax<span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" placeholder="Enter Tax"name="tax" >
+                                    </div>
+                                </div>
+
+                                
+                                
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary text-center mt-4" style="padding:2px 50px;">Add</submit>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end row -->
+        </div> 
+    </div>
+    <!-- End Page-content -->
+
+    {%endblock%}

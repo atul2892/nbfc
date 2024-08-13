@@ -1,0 +1,485 @@
+{%extends 'superadmin/index.html'%}
+{%load static%}
+{%block body%}
+<!-- ============================================================== -->
+<div class="main-contentw-100">
+    <div class="">
+        <div class="container-fluid">
+            
+            <!-- end row -->
+            {%if msg%}
+            <script>
+                alert("Product Updated Successfully...")
+                window.location.href = "/admin-dashboard"; 
+            </script>
+            {%endif%}
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <h4 style="color:green;text-align:center;border:1px solid rgb(195, 187, 187);padding: 5px;background-color: rgb(248, 240, 255);">Update Your Product </h4>
+                            <form method="post" enctype="multipart/form-data" class="form-control">
+                                {%csrf_token%}
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label">Category<span class="text-danger">*</span></label>
+                                            <select type="text" id="category-select" class="form-control" name="category" >
+                                                <option value="#" disabled selected>Select Category &#9660;</option>
+                                                {% for item in categories %}
+                                                <option value="{{item.name}}" {% if item.slug == data.category_slug %}selected{% endif %}>{{item.name}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label">Subcategory<span class="text-danger">*</span></label>
+                                            <select id="subcategory-select" class="form-control" name="subcategory">
+                                                <!-- Placeholder option for subcategory -->
+                                                <option value="{{data.subcategory_name}}" disabled>{{data.subcategory_name}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <script>
+                                        var categorySelect = document.getElementById('category-select');
+                                        var subcategorySelect = document.getElementById('subcategory-select');
+                                    
+                                        // Function to populate subcategory options based on selected category
+                                        function populateSubcategories(category, selectedSubcategory) {
+                                            subcategorySelect.innerHTML = ''; // Clear previous options
+                                            var defaultOption = document.createElement('option');
+                                            defaultOption.value = '#';
+                                            defaultOption.text = 'Select Category \u25BC';
+                                            defaultOption.disabled = true;
+                                            subcategorySelect.appendChild(defaultOption);
+                                    
+                                            var foundSelectedSubcategory = false; // Flag to track if selectedSubcategory is found in the options
+                                            {% for item in subcategories %}
+                                            if ('{{ item.category }}' === category) {
+                                                var option = document.createElement('option');
+                                                option.value = '{{ item.subcategory_name }}';
+                                                option.text = '{{ item.subcategory_name }}';
+                                                subcategorySelect.appendChild(option);
+                                                if ('{{ item.subcategory_name }}' === selectedSubcategory) {
+                                                    option.selected = true; // Set the option as selected
+                                                    foundSelectedSubcategory = true;
+                                                }
+                                            }
+                                            {% endfor %}
+                                    
+                                            // Set the default option if no subcategory is selected
+                                            if (!foundSelectedSubcategory) {
+                                                defaultOption.selected = true;
+                                            }
+                                        }
+                                    
+                                        // Event listener for category change
+                                        categorySelect.addEventListener('change', function() {
+                                            var category = this.value;
+                                            var selectedSubcategory = subcategorySelect.value; // Store the selected subcategory
+                                            populateSubcategories(category, selectedSubcategory);
+                                        });
+                                    
+                                        // Initial population of subcategories based on the initial maincategory selection and pre-selected subcategory
+                                        var initialcategory = categorySelect.value;
+                                        var initialSelectedSubcategory = '{{ data.subcategory }}'; // Assuming data.subcategory_name contains the pre-selected subcategory name
+                                        populateSubcategories(initialcategory, initialSelectedSubcategory);
+                                    </script>
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label">Section<span class="text-danger">*</span></label>
+                                            <select type="text" class="form-control"  name="section"  >
+                                                <option value="#" disabled selected>Select Section &#9660;</option>
+                                                {%for item in section%}
+                                                <option value="{{item.id}}"{%if item.slug == data.section_slug%}selected {%endif%}>{{item.name}}</option>
+                                                {%endfor%}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label">Price Range<span class="text-danger">*</span></label>
+                                            <select type="text" class="form-control"  name="price_range" >
+                                                <option value="#" disabled selected>Select Price Range &#9660;</option>
+                                                {%for item in price_range%}
+                                                <option value="{{item.id}}"{%if item.range_slug == data.price_range_slug%}selected {%endif%}>{{item.range}}</option>
+                                                {%endfor%}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label"> Name<span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" placeholder="Enter Name"name="name" value="{{data.name}}">
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label"> Unit<span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" placeholder="Unit(e.g KG,pc etc)"name="unit" value="{{data.unit}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label"> Weight(in Kg)<span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" placeholder="0.0"name="weight" value="{{data.weight}}"step="any">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label"> Minimum Purchase Qty<span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" placeholder="Enter Minimum Purchase Qty"name="minimum_purchase_qty" value="{{data.minimum_purchase_qty}}">
+                                        </div>
+                                    </div>
+                                
+                                    <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label"> Tags<span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" placeholder="Enter Tags"name="tags" value="{{data.tags}}">
+                                        </div>
+                                    </div> -->
+
+                                    {%if data.product_image1%}
+                                    <div class="col-lg-1">
+                                        <div class="mb-3">
+                                            <img src="{{data.product_image1.url}}" style="height:50px;width:70px;margin-top:20px">
+                                        </div>
+                                    </div>
+                                    {%endif%}
+                                    <div class="col-lg-2">
+                                        <div class="mb-3">
+                                            <label class="form-label"> Product Image-1<span class="text-danger">*</span></label>
+                                            <input type="file" class="form-control" name="product_image1">
+                                        </div>
+                                    </div>
+                                    {%if data.product_image2%}
+                                    <div class="col-lg-1">
+                                        <div class="mb-3">
+                                            <img src="{{data.product_image2.url}}" style="height:50px;width:70px;margin-top:20px">
+                                        </div>
+                                    </div>
+                                    {%endif%}
+                                    <div class="col-lg-2">
+                                        <div class="mb-3">
+                                            <label class="form-label"> Product Image-2</label>
+                                            <input type="file" class="form-control" name="product_image2" >
+                                        </div>
+                                    </div>
+                                    {%if data.product_image3%}
+                                    <div class="col-lg-1">
+                                        <div class="mb-3">
+                                            <img src="{{data.product_image3.url}}" style="height:50px;width:70px;margin-top:20px">
+                                        </div>
+                                    </div>
+                                    {%endif%}
+                                    <div class="col-lg-2">
+                                        <div class="mb-3">
+                                            <label class="form-label"> Product Image-3</label>
+                                            <input type="file" class="form-control" name="product_image3" >
+                                        </div>
+                                    </div>
+
+                                    {%if data.product_image4%}
+                                    <div class="col-lg-1">
+                                        <div class="mb-3">
+                                            <img src="{{data.product_image4.url}}" style="height:50px;width:70px;margin-top:20px">
+                                        </div>
+                                    </div>
+                                    {%endif%}
+                                    <div class="col-lg-2">
+                                        <div class="mb-3">
+                                            <label class="form-label"> Product Image-4</label>
+                                            <input type="file" class="form-control" name="product_image4" >
+                                        </div>
+                                    </div>
+
+                                    {%if data.product_image5%}
+                                    <div class="col-lg-1">
+                                        <div class="mb-3">
+                                            <img src="{{data.product_image5.url}}" style="height:50px;width:70px;margin-top:20px">
+                                        </div>
+                                    </div>
+                                    {%endif%}
+                                    <div class="col-lg-2">
+                                        <div class="mb-3">
+                                            <label class="form-label"> Product Image-5</label>
+                                            <input type="file" class="form-control" name="product_image5" >
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                
+                                <!-- <h6 style="color:black;text-align:center;border:1px solid rgb(224, 219, 219);padding: 3px;background-color: rgb(248, 240, 255);">Product Videos</h6>
+                                
+                                <div class="col-lg-4">
+                                    <div class="mb-3">
+                                        <label class="form-label"> Video Provider</label>
+                                        <select name="link_type"class="form-control">
+                                            <option value="Youtuber" {%if data.link_type == "Youtube"%}selected{%endif%}>YouTube</option>
+                                            <option value="others">Others</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8">
+                                    <div class="mb-3">
+                                        <label class="form-label"> Video Link</label>
+                                        <input type="text" class="form-control" placeholder="Video Link"name="video_link"value="{{data.video_link}}" >
+                                    </div>
+                                </div> -->
+                                
+                                
+
+                                
+                                <h6 style="color:black;text-align:center;border:1px solid rgb(224, 219, 219);padding: 3px;background-color: rgb(248, 240, 255);">Product Price & Stock</h6>
+                                <div class="col-lg-2">
+                                    <div class="mb-3">
+                                        <label class="form-label"> Base Price<span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" placeholder="Base Price"name="baseprice" value="{{data.baseprice}}"step="any">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-2">
+                                    <div class="mb-3">
+                                        <label class="form-label"> Final Price<span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" placeholder="Final Price"name="finalprice" value="{{data.finalprice}}"step="any">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="mb-3">
+                                        <label class="form-label"> Quantity<span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" placeholder="Enter Quantity"name="qty" value="{{data.qty}}" >
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="mb-3">
+                                        <label class="form-label">Stock Quantity<span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" placeholder="Enter Stock Quantity"name="stock_qty" value="{{data.stock_qty}}" >
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="mb-3">
+                                        <label class="form-label"> Stock<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" placeholder="Enter Stock"name="stock" value="{{data.stock}}" >
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="mb-3">
+                                        <label class="form-label"> Low Stock Qty<span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" placeholder="Enter Low Stock Quantity"name="low_stock_qty" value="{{data.low_stock_qty}}" >
+                                    </div>
+                                </div>
+                                
+                                <!-- <div class="col-lg-2">
+                                    <div class="mb-3">
+                                        <label class="form-label"> SKU<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" placeholder="Enter  SKU"name="sku"value="{{data.sku}}" >
+                                    </div>
+                                </div>
+                            
+                                <div class="col-lg-2">
+                                    <div class="mb-3">
+                                        <label class="form-label"> External Link</label>
+                                        <input type="text" class="form-control" placeholder="External link"name="external_link"value="{{data.external_link}}">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="mb-3">
+                                        <label class="form-label"> External Button Text</label>
+                                        <input type="text" class="form-control" placeholder="External Link Button Link"name="external_link_button_text"value="{{data.external_link_button_text}}">
+                                    </div>
+                                </div> -->
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Product Details<span class="text-danger">*</span> </label>
+                                        <textarea id='product_details' name="product_details" class="form-control" cols="30" rows="1" placeholder="Product Details"  >{{data.product_details|safe}}</textarea>
+                                    </div>
+                                </div>
+                                 
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Product Specification <span class="text-danger">*</span></label>
+                                        <textarea id='product_specification' name="product_specification" class="form-control" cols="30" rows="1"  placeholder="Product Specification"  >{{data.product_specification}}</textarea>
+                                    </div>
+                                </div>
+
+                                
+                                <div class="col-lg-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Product Description <span class="text-danger">*</span></label>
+                                        <textarea id='product_description' name="product_description" class="form-control" cols="30" rows="1" placeholder="Product Description" >{{data.product_description|safe}}</textarea>
+                                    </div>
+                                </div>
+
+                               
+                                <script src="https://cdn.ckeditor.com/ckeditor5/35.1.0/classic/ckeditor.js"></script>
+
+                                <script>
+                                    // Initialize CKEditor for each textarea
+                                    ClassicEditor
+                                        .create(document.querySelector('#product_details'))
+                                        .catch(error => {
+                                            console.error(error);
+                                        });
+
+                                    ClassicEditor
+                                        .create(document.querySelector('#product_specification'))
+                                        .catch(error => {
+                                            console.error(error);
+                                        });
+
+                                    ClassicEditor
+                                        .create(document.querySelector('#product_description'))
+                                        .catch(error => {
+                                            console.error(error);
+                                        });
+                                </script>
+                               
+
+                                
+                                <!-- <script>
+                                    tinymce.init({
+                                      selector: 'textarea',
+                                      plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+                                      toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+                                    });
+                                  </script> -->
+
+
+
+                                <!-- <div class="col-lg-3">
+                                    <div class="mb-3">
+                                        <label class="form-label"> PDF Specification</label>
+                                        <input type="file" class="form-control" name="pdf_specification">
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="mb-3">
+                                        <label class="form-label"> SEO Meta Title</label>
+                                        <input type="text" class="form-control" placeholder="Meta Title"name="seo_meta_title"value="{{data.seo_meta_title}}" >
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="mb-3">
+                                        <label class="form-label"> SEO Meta Description</label>
+                                        <input type="text" class="form-control" placeholder="Meta Description"name="meta_description" value="{{data.meta_description}}" >
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="mb-3">
+                                        <label class="form-label"> SEO Meta Image</label>
+                                        <input type="file" class="form-control" name="meta_image" >
+                                    </div>
+                                </div> 
+                                
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label class="form-label"> Product FAQ Title</label>
+                                        <input type="text" class="form-control" name="product_faq_title"value="{{data.product_faq_title}}" >
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label class="form-label"> Product FAQ Answer</label>
+                                        <input type="text" class="form-control" name="product_faq_answer"value="{{data.product_faq_answer}}" >
+                                    </div>
+                                </div>
+                            
+                               
+                                <h6 style="color:black;text-align:center;border:1px solid rgb(224, 219, 219);padding: 3px;background-color: rgb(248, 240, 255);">Shipping Configurations</h6>
+                                
+                                <div class="col-lg-2">
+                                    <div class="mb-3">
+                                        <label class="form-label"> Free Shipping</label>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" value="yes"name="free_shipping"{%if data.free_shipping == "yes"%}checked{%endif%}>
+                                          </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="mb-3">
+                                        <label class="form-label"> Flat Rate</label>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" value="yes"name="fat_rate"{%if data.fat_rate == "yes"%}checked{%endif%}>
+                                          </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="mb-3">
+                                        <label class="form-label"> Is Product multiply by</label>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" value="yes"name="is_product_quality_multiply"{%if data.is_product_quality_multiply == "yes"%}checked{%endif%}>
+                                          </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="mb-3">
+                                        <label class="form-label"> Low Stock Quantity Warning<span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" placeholder="Low Stock Quantity Warning"name="low_stock_qty"min="5" value="{{data.low_stock_qty}}">
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-2">
+                                    <div class="mb-3">
+                                        <label class="form-label"> Show Stock Quantity</label>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" value="yes"name="hide_stock"{%if data.hide_stock == "yes"%}checked{%endif%}>
+                                          </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="mb-3">
+                                        <label class="form-label"> Show Stock with Text</label>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" value="yes"name="hide_stock"{%if data.hide_stock == "yes"%}checked{%endif%}>
+                                          </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="mb-3">
+                                        <label class="form-label"> Cash on Delivery</label>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" value="yes"name="cash_on_delivery" {%if data.cash_on_delivery == "yes"%}checked{%endif%}>
+                                          </div>
+                                    </div>
+                                </div>
+                                
+                            
+                                <div class="col-lg-2">
+                                    <div class="mb-3">
+                                        <label class="form-label"> Shipping Days<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" placeholder=" Shipping Day"name="shipping_day" value="{{data.shipping_day}}" >
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="mb-3">
+                                        <label class="form-label"> Tax<span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" placeholder="Enter Tax"name="tax" value="{{data.tax}}">
+                                    </div>
+                                </div> -->
+                                
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary text-center mt-4" style="padding:2px 50px;">Update</submit>
+                                </div>
+                            </form>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            <!-- end row -->
+        </div> 
+    </div>
+    <!-- End Page-content -->
+
+    {%endblock%}

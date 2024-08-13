@@ -1,0 +1,136 @@
+{%extends 'superadmin/index.html'%}
+{%load static%}
+{%block body%}
+<!-- ============================================================== -->
+<div class="main-contentw-100">
+    <div class="">
+        <div class="container-fluid">
+            
+            <div class="row">
+                
+                <div class="col-lg-12 mt-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title mb-4 text-center"> Seller Details</span></h4>
+                            <div class="table-responsive">
+                                <table class="table align-middle table-nowrap table-bordered">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th class="align-middle">Name</th>
+                                            <td> {{data.name}}<td>
+                                        </tr>
+                                        <tr>
+                                            <th class="align-middle">Company Name</th>
+                                            <td> {{data.company_name}}<td>
+                                        </tr>
+                                        <tr>
+                                            <th class="align-middle">Email</th>
+                                            <td> {{data.email}}<td>
+                                        </tr>
+                                        <tr>
+                                            <th class="align-middle">Phone</th>
+                                            <td> {{data.phone}}<td>
+                                        </tr>
+                                        <tr>
+                                            <th class="align-middle">Address</th>
+                                            <td> {{data.address}}<td>
+                                        </tr>
+                                        <tr>
+                                            <th class="align-middle">City</th>
+                                            <td> {{data.city}}<td>
+                                        </tr>
+                                        <tr>
+                                            <th class="align-middle">State</th>
+                                            <td> {{data.state}}<td>
+                                        </tr>
+                                        <tr>
+                                            <th class="align-middle">GST</th>
+                                            <td> {{data.gst}}<td>
+                                        </tr>
+                                        <tr>
+                                            <th class="align-middle">PIN</th>
+                                            <td> {{data.pin}}<td>
+                                        </tr>
+                                        <tr>
+                                            <th class="align-middle">Bank Name</th>
+                                            <td> {{data.bank_name}}<td>
+                                        </tr>
+                                        <tr>
+                                            <th class="align-middle">Account Holder Name</th>
+                                            <td> {{data.account_holder_name}}<td>
+                                        </tr>
+                                        <tr>
+                                            <th class="align-middle">Account Number</th>
+                                            <td> {{data.account_number}}<td>
+                                        </tr>
+                                        <tr>
+                                            <th class="align-middle">IFSC Code</th>
+                                            <td> {{data.ifsc_code}}<td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <th class="align-middle">GST Certificate</th>
+                                            {%if data.gst_certificate%}
+                                            <td> <a href="{{data.gst_certificate.url}}"><i class="fa fa-eye"></i>View document</a><td>
+                                            {%endif%}
+                                            </tr>
+
+                                        <tr>
+                                            <th class="align-middle">Udhyam Certificate</th>
+                                            {%if data.udhyam_certificate%}
+                                            <td> <a href="{{data.udhyam_certificate.url}}"><i class="fa fa-eye"></i>View document</a><td>
+                                            {%endif%}
+                                            </tr>
+                                        <tr>
+                                            <th class="align-middle">PAN Card</th>
+                                            {%if data.pan_card%}
+                                            <td> <a href="{{data.pan_card.url}}"><i class="fa fa-eye"></i>View document</a><td>
+                                            {%endif%}
+                                            </tr>
+                                        <tr>
+                                            <th class="align-middle">Cancelled Check</th>
+                                            {%if data.cancelled_check%}
+                                            <td> <a href="{{data.cancelled_check.url}}"><i class="fa fa-eye"></i>View document</a><td>
+                                            {%endif%}
+                                            </tr>
+                                        <tr>
+                                            <th class="align-middle">Other Document</th>
+                                            {%if data.other_document%}
+                                            <td> <a href="{{data.other_document.url}}"><i class="fa fa-eye"></i>View document</a><td>
+                                            {%endif%}
+                                            </tr>
+                                        
+                                        <tr>
+                                            <th class="align-middle">Registration Date</th>
+                                            <td> {{data.date}}<td>
+                                        </tr>
+                                        <tr>
+                                            <th class="align-middle">Verification</th>
+                                            {%if data.verification == "Pending"%}
+                                            <td class="bg-danger text-light"> {{data.verification}}<span style="float:right;"><a href="/admin-verify-seller/{{data.id}}" class="btn btn-primary btn-sm">Verify Now</a></span><td>
+                                                {%else%}
+                                                <td class="bg-success text-light"> {{data.verification}}<td>
+                                                {%endif%}
+                                        </tr>
+                                        <tr>
+                                           
+                                            <a href="/admin-update-seller/{{data.id}}" class="btn btn-primary btn-sm " style="float:right">Edit</a>
+                                            </td>
+                                       
+                                            
+                                    </thead>
+                                   
+                                </table>
+                            </div>
+                            <!-- end table-responsive -->
+                        </div>
+                    </div>
+                </div>
+                
+
+            </div>
+         </div> 
+    </div>
+    <!-- End Page-content -->
+
+    {%endblock%}

@@ -1,0 +1,52 @@
+{%extends 'superadmin/index.html'%}
+{%load static%}
+{%block body%}
+
+<!-- ============================================================== -->
+<div class="main-contentw-100">
+    <div class="">
+        <div class="container-fluid">
+            
+            <!-- end row -->
+            
+
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <h4 class=" text-center">Update Order Status</h4>
+                            <form method="post" enctype="multipart/form-data">
+                                {%csrf_token%}
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label">Order Status<span class="text-danger">*</span></label>
+                                            <select type="text" id="category-select" class="form-control" name="orderstatus" >
+                                                <option value="#" disabled selected>Select Order Status &#9660;</option>
+                                                <option value="0" >Order Placed</option>
+                                                <option value="1" >Not Packed</option>
+                                                <option value="2" >Packed</option>
+                                                <option value="3" >Ready to Ship</option>
+                                                <option value="4" >Shipped</option>
+                                                <option value="5" >Out For Delivery</option>
+                                                <option value="6" >Delivered</option>
+                                                <option value="7" >Cancelled</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary text-center mt-4" style="padding:2px 50px;">Update</submit>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end row -->
+        </div> 
+    </div>
+    <!-- End Page-content -->
+
+    {%endblock%}

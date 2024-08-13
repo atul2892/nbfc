@@ -1,0 +1,216 @@
+{%extends "index.html"%}
+{%load static%}
+{%block body%}
+
+    <main id="main" class="aux-main aux-territory  aux-single aux-page aux-boxed-container no-sidebar aux-sidebar-style-border aux-user-entry" style="margin-top: 15%;">
+        <div class="aux-wrapper">
+            <div class="aux-container aux-fold">
+
+                <div id="primary" class="aux-primary" >
+                    <div class="content" role="main"  >
+
+                        
+                
+                        
+                        <article id="post-263" class="post-263 page type-page status-publish hentry">
+
+                            <div class="entry-main">
+
+                                <div class="entry-content">
+
+                                    
+<div class="um um-register um-257">
+	<div class="um-form" data-mode="register">
+		{%for i in messages%}
+		<script>
+			alert("{{i}}")
+		</script>
+		{%endfor%}
+		<form method="post" action="">
+			{%csrf_token%}
+            
+            <div class="form-group">
+                <label for="loan_type">Loan Type</label>
+                <select name="loan" id="loan_type" required>
+                    <option value="">Select a loan type</option>
+                    {%for i in loandata%}
+                    <option value="{{i.name}}">{{i.name}}</option>
+                    {%endfor%}
+                    
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="select_bank">Select Bank</label>
+                <select name="bank" id="select_bank" required>
+                    <option value="">Select a bank</option>
+                    {%for i in bankdata%}
+                    <option value="{{i.user_id}}">{{i.bank_name}}</option>
+                    {%endfor%}
+                   
+                </select>
+            </div>
+            
+			<div class="form-group">
+				<label for="fullname">Full Name</label>
+				<input type="text" name="fullname" id="fullname" autocomplete="off" required>
+			</div>
+	
+			<div class="form-group">
+				<label for="user_email">E-mail Address</label>
+				<input type="email" name="email" id="user_email" autocomplete="off" required>
+			</div>
+	
+			<div class="form-group">
+				<label for="phone">Phone</label>
+				<input type="tel" name="phone" id="phone" autocomplete="off" required>
+			</div>
+
+            <div class="form-group">
+				<label for="fullname">Loan Amount</label>
+				<input type="text" name="amount" id="fullname" autocomplete="off" required>
+			</div>
+
+            <div class="form-group">
+				<label for="fullname">Loan Tenure</label>
+				<input type="text" name="tenure" id="fullname" autocomplete="off" required>
+			</div>
+
+            <div class="form-group">
+				<label for="logo">Adhar Card</label>
+				<input type="file" name="adhar" id="logo" required>
+			</div>
+
+            <div class="form-group">
+				<label for="logo">Pan Card</label>
+				<input type="file" name="pan" id="logo" required>
+			</div>
+	
+			<input type="hidden" name="form_id" value="257">
+	
+			<p class="hidden-field">
+				<label for="um_request">Only fill in if you are not human</label>
+				<input type="hidden" name="um_request" id="um_request" value="">
+			</p>
+	
+			<input type="hidden" name="_wp_http_referer" value="/register/">
+	
+			<div class="form-actions">
+				<input type="submit" value="Submit">
+				<!-- <a href="/login" class="login-link">Login</a> -->
+			</div>
+		</form>
+
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				margin: 20px;
+			}
+			
+			form {
+				max-width: 600px;
+				margin: auto;
+				padding: 20px;
+				border: 1px solid #ddd;
+				border-radius: 8px;
+				background-color: #f9f9f9;
+			}
+			
+			.form-group {
+				margin-bottom: 15px;
+			}
+			
+			.form-group label {
+				display: block;
+				margin-bottom: 5px;
+				font-weight: bold;
+			}
+			
+			.form-group input,
+            .form-group select {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+			
+			.form-actions {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-top: 20px;
+			}
+			
+			.form-actions input[type="submit"] {
+				padding: 10px 20px;
+				border: none;
+				border-radius: 4px;
+				background-color: #007bff;
+				color: white;
+				cursor: pointer;
+			}
+			
+			.form-actions input[type="submit"]:hover {
+				background-color: #0056b3;
+			}
+			
+			.form-actions .login-link {
+				text-decoration: none;
+				color: #007bff;
+			}
+			
+			.form-actions .login-link:hover {
+				text-decoration: underline;
+			}
+			
+			.hidden-field {
+				display: none;
+			}
+			
+		</style>
+
+	</div>
+</div>
+<style>
+			.um-257.um {
+			max-width: 450px;
+		}
+		</style>
+
+<div class="clear"></div>
+                                </div> <!-- end article section -->
+
+                                <footer class="entry-meta">
+                                                                    </footer> <!-- end article footer -->
+
+                            </div>
+
+                        </article> <!-- end article -->
+
+
+                        
+                        <div class="clear"></div>
+
+                        
+                        <div class="clear"></div>
+
+                        
+
+<!-- You can start editing here. -->
+
+
+    
+
+
+
+                
+                    </div><!-- end content -->
+                </div><!-- end primary -->
+
+                
+            </div><!-- end container -->
+        </div><!-- end wrapper -->
+    </main><!-- end main -->
+
+    {%endblock%}

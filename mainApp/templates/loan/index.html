@@ -1,0 +1,161 @@
+{%extends "index.html"%}
+{%load static%}
+{%block body%}
+
+    <main id="main" class="aux-main aux-territory  aux-single aux-page aux-full-container no-sidebar aux-sidebar-style-border aux-user-entry" style="margin-top: 20%;">
+        <div class="aux-wrapper">
+            <div class="aux-container aux-fold">
+
+                <div id="primary" class="aux-primary" >
+                    <div class="content" role="main"  >
+
+                        
+
+        
+						<div class="card-container">
+							{%for i in loandata%}
+							<div class="card">
+								<div class="card-logo">
+									<img src="{{i.image.url}}" alt="Loan Logo">
+								</div>
+								<div class="card-content">
+									<h2 class="card-title">{{i.name}}</h2>
+									<p class="card-description">
+										{{i.content|safe}}
+									</p>
+								</div>
+								<div class="card-footer">
+									<a href="/bank/{{i.id}}" class="apply-button">Apply Now</a>
+								</div>
+							</div>
+							{%endfor%}
+							<!-- <div class="card">
+								<div class="card-logo">
+									<img src="logo-placeholder.png" alt="Loan Logo">
+								</div>
+								<div class="card-content">
+									<h2 class="card-title">Home Loan</h2>
+									<p class="card-description">
+										A home loan is used to purchase or refinance a home. It usually has a lower interest rate compared to other types of loans.
+									</p>
+								</div>
+							</div>
+							<div class="card">
+								<div class="card-logo">
+									<img src="logo-placeholder.png" alt="Loan Logo">
+								</div>
+								<div class="card-content">
+									<h2 class="card-title">Auto Loan</h2>
+									<p class="card-description">
+										An auto loan is a loan specifically for purchasing a vehicle. It often comes with flexible terms and competitive rates.
+									</p>
+								</div>
+							</div> -->
+						</div>
+
+
+						<style>
+							body {
+								font-family: Arial, sans-serif;
+								margin: 0;
+								padding: 20px;
+								background-color: #f4f4f4;
+							}
+							
+							.card-container {
+								display: flex;
+								flex-wrap: wrap;
+								gap: 20px;
+								justify-content: center;
+							}
+							
+							.card {
+								flex: 1 1 calc(33.333% - 20px); /* 3 cards per row with gap space */
+								max-width: calc(33.333% - 20px);
+								border-radius: 8px;
+								overflow: hidden;
+								box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+								background-color: #ffffff;
+								transition: transform 0.3s ease, box-shadow 0.3s ease;
+							}
+							
+							.card-logo img {
+								width: 100%;
+								height: auto;
+							}
+							
+							.card-content {
+								padding: 15px;
+							}
+							
+							.card-title {
+								font-size: 1.5em;
+								margin: 0;
+								color: #333;
+							}
+							
+							.card-description {
+								font-size: 1em;
+								color: #666;
+								margin-top: 10px;
+							}
+
+							.card-footer {
+								padding: 15px;
+								text-align: center;
+							}
+							
+							.apply-button {
+								display: inline-block;
+								padding: 10px 20px;
+								font-size: 1em;
+								color: #ffffff;
+								background-color: #007bff;
+								text-decoration: none;
+								border-radius: 4px;
+								transition: background-color 0.3s ease;
+							}
+							
+							.apply-button:hover {
+								background-color: #0056b3;
+							}
+							
+							/* Hover effect for cards */
+							.card:hover {
+								transform: translateY(-5px);
+								box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+							}
+							
+							/* Responsive adjustments */
+							@media (max-width: 1024px) {
+								.card {
+									flex: 1 1 calc(50% - 20px); /* 2 cards per row for medium screens */
+									max-width: calc(50% - 20px);
+								}
+							}
+							
+							@media (max-width: 768px) {
+								.card {
+									flex: 1 1 100%; /* 1 card per row for small screens */
+									max-width: 100%;
+								}
+							}
+							
+						</style>
+    		
+
+
+    
+
+
+
+
+                    </div><!-- end content -->
+                </div><!-- end primary -->
+
+                
+            </div><!-- end container -->
+        </div><!-- end wrapper -->
+    </main><!-- end main -->
+
+    {%endblock%}
